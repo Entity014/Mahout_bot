@@ -1,0 +1,6 @@
+[Desktop Entry]
+version=1.0
+Type=Application
+Terminal=true
+Exec=bash -i -c "python3 ~/Mahout_bot/timer.py"
+Name=Timer Mor Ton
