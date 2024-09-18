@@ -33,8 +33,8 @@ class Stopwatch(QWidget):
         self.timer = QTimer(self)
         self.blink_timer = QTimer(self)
         self.time = QTime(0, 0, 0)
-        self.time_limit = QTime(0, 0, 10)
-        self.time_warning = QTime(0, 0, 5)
+        self.time_limit = QTime(0, 0, 10)  # TODO: Set Time On this (H, M, S)
+        self.time_warning = self.time_limit.addSecs(-5)
         self.lap_display = [QLabel(), QLabel(), QLabel()]
         self.lap_A = {
             "Team": "A",
@@ -116,7 +116,7 @@ class Stopwatch(QWidget):
         """
         )
 
-        self.timer_button.start(10)
+        self.timer.start(10)
         # self.start_button.clicked.connect(self.start)
         # self.stop_button1.clicked.connect(self.stop1)
         # self.stop_button2.clicked.connect(self.stop2)
