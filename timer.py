@@ -29,7 +29,6 @@ class Stopwatch(QWidget):
         # self.stop_button2 = QPushButton("Stop2", self)
         # self.stop_button3 = QPushButton("Stop3", self)
         # self.reset_button = QPushButton("Reset", self)
-        self.timer_button = QTimer(self)
         self.timer = QTimer(self)
         self.blink_timer = QTimer(self)
         self.time = QTime(0, 0, 0)
@@ -61,12 +60,12 @@ class Stopwatch(QWidget):
         self.isStart = False
         self.blinking = False
 
-        self.GPIO.setmode(GPIO.BCM)
-        self.GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        self.GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        self.GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        self.GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        self.GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        # GPIO.setmode(GPIO.BCM)
+        # GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        # GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        # GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        # GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        # GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
         self.initUI()
 
@@ -116,7 +115,6 @@ class Stopwatch(QWidget):
         """
         )
 
-        self.timer.start(10)
         # self.start_button.clicked.connect(self.start)
         # self.stop_button1.clicked.connect(self.stop1)
         # self.stop_button2.clicked.connect(self.stop2)
@@ -124,14 +122,12 @@ class Stopwatch(QWidget):
         # self.reset_button.clicked.connect(self.reset)
         self.timer.timeout.connect(self.update_display)
         self.blink_timer.timeout.connect(self.blink_lcd)
-        self.timer_button.timeout.connect(self.button_callback)
 
-    def button_callback(self):
-        self.GPIO.add_event_detect(23, GPIO.RISING, callback=self.start, bouncetime=300)
-        self.GPIO.add_event_detect(17, GPIO.RISING, callback=self.stop1, bouncetime=300)
-        self.GPIO.add_event_detect(27, GPIO.RISING, callback=self.stop2, bouncetime=300)
-        self.GPIO.add_event_detect(22, GPIO.RISING, callback=self.stop3, bouncetime=300)
-        self.GPIO.add_event_detect(24, GPIO.RISING, callback=self.reset, bouncetime=300)
+        GPIO.add_event_detect(23, GPIO.RISING, callback=self.start, bouncetime=300)
+        GPIO.add_event_detect(17, GPIO.RISING, callback=self.stop1, bouncetime=300)
+        GPIO.add_event_detect(27, GPIO.RISING, callback=self.stop2, bouncetime=300)
+        GPIO.add_event_detect(22, GPIO.RISING, callback=self.stop3, bouncetime=300)
+        GPIO.add_event_detect(24, GPIO.RISING, callback=self.reset, bouncetime=300)
 
     def start(self):
         self.timer.start(10)
