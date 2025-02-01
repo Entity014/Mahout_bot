@@ -1,5 +1,6 @@
 import sys
-import RPi.GPIO as GPIO
+
+# import RPi.GPIO as GPIO
 from PyQt5.QtWidgets import (
     QApplication,
     QWidget,
@@ -24,11 +25,11 @@ class Stopwatch(QWidget):
         font.setPointSize(36)
         self.lcd.setFont(font)
 
-        # self.start_button = QPushButton("Start", self)
-        # self.stop_button1 = QPushButton("Stop1", self)
-        # self.stop_button2 = QPushButton("Stop2", self)
-        # self.stop_button3 = QPushButton("Stop3", self)
-        # self.reset_button = QPushButton("Reset", self)
+        self.start_button = QPushButton("Start", self)
+        self.stop_button1 = QPushButton("Stop1", self)
+        self.stop_button2 = QPushButton("Stop2", self)
+        self.stop_button3 = QPushButton("Stop3", self)
+        self.reset_button = QPushButton("Reset", self)
         self.timer_button = QTimer(self)
         self.timer = QTimer(self)
         self.blink_timer = QTimer(self)
@@ -67,12 +68,12 @@ class Stopwatch(QWidget):
         self.pre_stop3 = None
         self.pre_reset = None
 
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        # GPIO.setmode(GPIO.BCM)
+        # GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        # GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        # GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        # GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        # GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
         self.initUI()
 
@@ -87,11 +88,11 @@ class Stopwatch(QWidget):
 
         hbox = QHBoxLayout()
 
-        # hbox.addWidget(self.start_button)
-        # hbox.addWidget(self.stop_button1)
-        # hbox.addWidget(self.stop_button2)
-        # hbox.addWidget(self.stop_button3)
-        # hbox.addWidget(self.reset_button)
+        hbox.addWidget(self.start_button)
+        hbox.addWidget(self.stop_button1)
+        hbox.addWidget(self.stop_button2)
+        hbox.addWidget(self.stop_button3)
+        hbox.addWidget(self.reset_button)
 
         vbox.addLayout(hbox)
         for index, value in enumerate(self.lap_display):
@@ -122,12 +123,12 @@ class Stopwatch(QWidget):
         """
         )
 
-        self.timer_button.start(10)
-        # self.start_button.clicked.connect(self.start)
-        # self.stop_button1.clicked.connect(self.stop1)
-        # self.stop_button2.clicked.connect(self.stop2)
-        # self.stop_button3.clicked.connect(self.stop3)
-        # self.reset_button.clicked.connect(self.reset)
+        # self.timer_button.start(10)
+        self.start_button.clicked.connect(self.start)
+        self.stop_button1.clicked.connect(self.stop1)
+        self.stop_button2.clicked.connect(self.stop2)
+        self.stop_button3.clicked.connect(self.stop3)
+        self.reset_button.clicked.connect(self.reset)
         self.timer.timeout.connect(self.update_display)
         self.blink_timer.timeout.connect(self.blink_lcd)
         self.timer_button.timeout.connect(self.button_callback)
